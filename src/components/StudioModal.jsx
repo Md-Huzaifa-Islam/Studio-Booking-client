@@ -64,7 +64,7 @@ export default function StudioModal({ studio, id }) {
     <div>
       {/* Book Now Button */}
       <button
-        className="btn btn-primary"
+        className="btn btn-primary bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-md shadow-lg transition duration-300"
         onClick={() => {
           document.getElementById(`studio-modal-${id}`).showModal();
           setError("");
@@ -74,8 +74,11 @@ export default function StudioModal({ studio, id }) {
       </button>
 
       {/* Modal */}
-      <dialog id={`studio-modal-${id}`} className="modal mx-auto w-3xl">
-        <div className="modal-box w-full max-w-none">
+      <dialog
+        id={`studio-modal-${id}`}
+        className="modal mx-auto w-full max-w-4xl"
+      >
+        <div className="modal-box p-8 bg-white rounded-lg shadow-lg max-w-none">
           {/* Close button */}
           <form method="dialog">
             <button
@@ -90,15 +93,15 @@ export default function StudioModal({ studio, id }) {
           </form>
 
           {/* Studio Information */}
-          <h2 className="text-xl font-bold">{studio.Name}</h2>
-          <p className="text-gray-600">{studio.Type}</p>
-          <p className="mt-2 text-gray-500">
+          <h2 className="text-2xl font-bold text-gray-800">{studio.Name}</h2>
+          <p className="text-gray-500">{studio.Type}</p>
+          <p className="mt-2 text-gray-600">
             📍 {studio.Location.City}, {studio.Location.Area}
           </p>
           <p className="text-sm text-gray-400">{studio.Location.Address}</p>
 
-          <div className="mt-2">
-            <h3 className="text-sm font-semibold">Amenities:</h3>
+          <div className="mt-4">
+            <h3 className="text-sm font-semibold text-gray-700">Amenities:</h3>
             <ul className="list-inside list-disc text-sm text-gray-600">
               {studio.Amenities.map((amenity, index) => (
                 <li key={index}>{amenity}</li>
@@ -106,7 +109,7 @@ export default function StudioModal({ studio, id }) {
             </ul>
           </div>
 
-          <p className="mt-2 font-bold text-blue-500">
+          <p className="mt-4 font-bold text-blue-500">
             💰 {studio.PricePerHour} {studio.Currency}/hr
           </p>
           <p className="text-yellow-500">⭐ {studio.Rating} / 5</p>
@@ -117,14 +120,14 @@ export default function StudioModal({ studio, id }) {
           </p>
 
           {/* Booking Form */}
-          <div className="mt-4">
-            <h3 className="text-lg font-bold">Book a Slot</h3>
+          <div className="mt-6">
+            <h3 className="text-lg font-bold text-gray-800">Book a Slot</h3>
 
-            <label className="mt-2 block text-sm">Name:</label>
+            <label className="mt-2 block text-sm text-gray-700">Name:</label>
             <input
               type="text"
               placeholder="Your name"
-              className="input input-bordered w-full"
+              className="input input-bordered w-full p-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
@@ -132,11 +135,11 @@ export default function StudioModal({ studio, id }) {
               }}
             />
 
-            <label className="mt-2 block text-sm">Email:</label>
+            <label className="mt-2 block text-sm text-gray-700">Email:</label>
             <input
               type="email"
               placeholder="Your email"
-              className="input input-bordered w-full"
+              className="input input-bordered w-full p-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
@@ -144,11 +147,13 @@ export default function StudioModal({ studio, id }) {
               }}
             />
 
-            <div className="flex justify-between">
+            <div className="mt-4 grid grid-cols-2 gap-4">
               <div>
-                <label className="mt-2 block text-sm">Select Date:</label>
+                <label className="block text-sm text-gray-700">
+                  Select Date:
+                </label>
                 <DatePicker
-                  className="input input-bordered w-full"
+                  className="input input-bordered w-full p-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   selected={date}
                   onChange={(d) => {
                     setDate(d);
@@ -159,9 +164,11 @@ export default function StudioModal({ studio, id }) {
               </div>
 
               <div>
-                <label className="mt-2 block text-sm">Select Time Slot:</label>
+                <label className="block text-sm text-gray-700">
+                  Select Time Slot:
+                </label>
                 <DatePicker
-                  className="input input-bordered w-full"
+                  className="input input-bordered w-full p-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   selected={time}
                   onChange={(t) => {
                     setTime(t);
@@ -176,10 +183,12 @@ export default function StudioModal({ studio, id }) {
                 />
               </div>
             </div>
-            <p className="text-center text-red-500">{error}</p>
+
+            <p className="text-center text-red-500 mt-2">{error}</p>
+
             <button
               type="button"
-              className="btn btn-primary mt-4 w-full"
+              className="btn btn-primary bg-blue-500 hover:bg-blue-700 text-white py-3 px-6 mt-6 w-full rounded-md shadow-lg transition duration-300"
               onClick={handleConfirmBooking}
             >
               Confirm Booking

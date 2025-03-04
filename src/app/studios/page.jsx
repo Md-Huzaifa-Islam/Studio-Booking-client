@@ -141,35 +141,38 @@ export default function StudioContainer() {
   }, [data]);
 
   if (isPending) {
-    return <span>Loading...</span>;
+    return <span className="text-center text-lg">Loading...</span>;
   }
 
   if (isError) {
-    return <span>Error: {error.message}</span>;
+    return (
+      <span className="text-center text-red-500">Error: {error.message}</span>
+    );
   }
 
   return (
-    <div>
+    <div className="p-4">
       <SectionHeader heading={"All Studios"} />
-      <div className="flex items-center justify-center gap-10">
-        {/* Search bar */}
+
+      {/* Search & Filter Section */}
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10">
+        {/* Location Search Bar */}
         {data && (
-          <div className="relative z-50">
+          <div className="relative z-50 w-full sm:w-1/3">
             <input
               type="text"
               value={searchTerm}
               onChange={handleSearchChange}
-              className="w-full rounded-md border p-2"
+              className="w-full rounded-md border p-2 text-gray-700"
               placeholder="Search for a location"
             />
-            {/* Suggestions dropdown */}
             {suggestions.length > 0 && (
-              <div className="absolute top-full left-0 mt-1 max-h-60 w-full overflow-y-auto border bg-black shadow-md">
+              <div className="absolute top-full left-0 mt-1 max-h-60 w-full overflow-y-auto border bg-white shadow-md rounded-md">
                 {suggestions.map((place) => (
                   <div
                     key={place}
                     onClick={() => handleSuggestionClick(place)}
-                    className="cursor-pointer p-2"
+                    className="cursor-pointer p-2 hover:bg-gray-200"
                   >
                     {place}
                   </div>
@@ -179,9 +182,9 @@ export default function StudioContainer() {
           </div>
         )}
 
-        {/* Search by radius */}
-        <div className="mt-4 flex items-center">
-          <label htmlFor="radius" className="mr-2">
+        {/* Radius Filter */}
+        <div className="flex items-center gap-3">
+          <label htmlFor="radius" className="text-sm">
             Search by radius (km):
           </label>
           <input
@@ -191,7 +194,7 @@ export default function StudioContainer() {
             onChange={(e) => setRadius(e.target.value)}
             min="1"
             max="100"
-            className="rounded-md border p-2"
+            className="rounded-md border p-2 w-20"
           />
           <button
             onClick={filterStudiosByRadius}
@@ -201,25 +204,25 @@ export default function StudioContainer() {
           </button>
         </div>
 
-        {/* Reset button */}
-        <div className="mt-4">
-          <button
-            onClick={resetFilters}
-            className="rounded-md bg-red-500 px-4 py-2 text-white"
-          >
-            <RiResetLeftLine />
-          </button>
-        </div>
+        {/* Reset Button */}
+        <button
+          onClick={resetFilters}
+          className="mt-4 sm:mt-0 rounded-md bg-red-500 px-4 py-2 text-white flex items-center gap-2"
+        >
+          <RiResetLeftLine /> Reset Filters
+        </button>
       </div>
-      <hr className="mx-auto my-8" />
-      {/* Display the filtered studios */}
-      <div className="grid grid-cols-3 justify-items-center gap-10 px-5">
+
+      <hr className="my-8" />
+
+      {/* Studio Cards Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         {filteredStudios && filteredStudios.length > 0 ? (
           filteredStudios.map((studio) => (
             <StudioCard key={studio.Id} studio={studio} />
           ))
         ) : (
-          <p>No studios found.</p>
+          <p className="text-center col-span-full text-lg">No studios found.</p>
         )}
       </div>
     </div>
