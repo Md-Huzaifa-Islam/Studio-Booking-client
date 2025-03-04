@@ -1,42 +1,57 @@
-import { format } from "date-fns";
+import { format, setHours, setMinutes, subHours } from "date-fns";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function StudioModal({ studio, id }) {
-  const [name, setName] = useState(null);
-  const [email, setEmail] = useState(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(null);
   const [error, setError] = useState("");
 
+  // Convert time string (e.g., "09:00") to Date object
+  const parseTime = (timeStr) => {
+    const [hours, minutes] = timeStr.split(":").map(Number);
+    return setHours(setMinutes(new Date(), minutes), hours);
+  };
+
+  const decreaseOneHour = (date) => {
+    const newDate = new Date(date);
+    newDate.setHours(newDate.getHours() - 1);
+    return newDate;
+  };
+
+  // Get min and max time constraints
+  const minTime = studio.Availability
+    ? decreaseOneHour(parseTime(studio.Availability.Open))
+    : setHours(setMinutes(new Date(), 0), 9);
+  console.log(minTime);
+  const maxTime = studio.Availability
+    ? subHours(parseTime(studio.Availability.Close), 1)
+    : setHours(setMinutes(new Date(), 0), 17);
+
   const handleConfirmBooking = () => {
-    const dateInMilliseconds = date.getTime();
-    const timeInMilliseconds = time ? time.getTime() : null;
-    if (!name || !email) {
-      setError("You have to input both name and email");
+    if (!name || !email || !time) {
+      setError("Please fill in all fields.");
       return;
     }
+
     const bookingData = {
-      name: name,
+      name,
       sName: studio.Type,
-      email: email,
-      date: format(new Date(dateInMilliseconds), "dd/MM/yyyy"),
-      time: format(new Date(timeInMilliseconds), "kk"),
+      email,
+      date: format(date, "dd/MM/yyyy"),
+      time: format(time, "hh:mm aa"),
       studio: id,
       created: Date.now(),
       city: studio.Location.City,
       area: studio.Location.Area,
     };
-    if (time == null) {
-      setError("You need to select a time to proceed");
-      return;
-    }
 
-    // Check if the booking already exists in localStorage
     let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
 
-    // Check for an existing booking for the same studio, date, and time
+    // Check if the time slot is already booked
     const isBooked = bookings.some(
       (booking) =>
         booking.studio === id &&
@@ -49,20 +64,17 @@ export default function StudioModal({ studio, id }) {
       return;
     }
 
-    // Add new booking to the localStorage
     bookings.push(bookingData);
     localStorage.setItem("bookings", JSON.stringify(bookings));
 
-    // Clear form and close modal after booking
+    // Reset fields and close modal
     setTime(null);
     setDate(new Date());
-    const modal = document.getElementById(`studio-modal-${id}`);
-    modal.close();
+    document.getElementById(`studio-modal-${id}`).close();
   };
 
   return (
     <div>
-      {/* Book Now Button */}
       <button
         className="btn btn-primary bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-md shadow-lg transition duration-300"
         onClick={() => {
@@ -73,13 +85,11 @@ export default function StudioModal({ studio, id }) {
         Book Now
       </button>
 
-      {/* Modal */}
       <dialog
         id={`studio-modal-${id}`}
         className="modal mx-auto w-full max-w-4xl"
       >
         <div className="modal-box p-8 bg-white rounded-lg shadow-lg max-w-none">
-          {/* Close button */}
           <form method="dialog">
             <button
               type="button"
@@ -92,13 +102,11 @@ export default function StudioModal({ studio, id }) {
             </button>
           </form>
 
-          {/* Studio Information */}
           <h2 className="text-2xl font-bold text-gray-800">{studio.Name}</h2>
           <p className="text-gray-500">{studio.Type}</p>
           <p className="mt-2 text-gray-600">
             📍 {studio.Location.City}, {studio.Location.Area}
           </p>
-          <p className="text-sm text-gray-400">{studio.Location.Address}</p>
 
           <div className="mt-4">
             <h3 className="text-sm font-semibold text-gray-700">Amenities:</h3>
@@ -113,13 +121,11 @@ export default function StudioModal({ studio, id }) {
             💰 {studio.PricePerHour} {studio.Currency}/hr
           </p>
           <p className="text-yellow-500">⭐ {studio.Rating} / 5</p>
-
           <p className="mt-2 text-green-500">
             🕒 Available: {studio.Availability.Open} -{" "}
             {studio.Availability.Close}
           </p>
 
-          {/* Booking Form */}
           <div className="mt-6">
             <h3 className="text-lg font-bold text-gray-800">Book a Slot</h3>
 
@@ -179,6 +185,8 @@ export default function StudioModal({ studio, id }) {
                   timeIntervals={60}
                   timeCaption="Time"
                   dateFormat="h:mm aa"
+                  minTime={minTime}
+                  maxTime={maxTime} // Properly limits selection
                   required
                 />
               </div>
