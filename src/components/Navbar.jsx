@@ -48,7 +48,7 @@ export default function Navbar() {
             href={"/"}
             className="btn btn-ghost text-2xl font-semibold text-white"
           >
-            Studio
+            StudioSpace
           </Link>
         </div>
         <div className="navbar-end hidden lg:flex">
