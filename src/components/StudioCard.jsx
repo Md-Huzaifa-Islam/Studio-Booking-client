@@ -1,9 +1,15 @@
 import React from "react";
+import { motion } from "framer-motion";
 import StudioModal from "./StudioModal";
 
 export default function StudioCard({ studio }) {
   return (
-    <div className="card w-full max-w-xl shadow-lg rounded-lg overflow-hidden bg-white transform hover:scale-105 transition-transform duration-300">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3 }}
+      className="card w-full max-w-xl shadow-lg rounded-lg overflow-hidden bg-white transform hover:scale-105 transition-transform duration-300"
+    >
       <div className="card-body p-6">
         {/* Studio Name & Type */}
         <h2 className="card-title text-2xl font-semibold text-gray-800">
@@ -45,6 +51,6 @@ export default function StudioCard({ studio }) {
           <StudioModal studio={studio} id={studio.Id} />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

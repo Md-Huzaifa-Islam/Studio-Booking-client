@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="light">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col justify-between min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col justify-between min-h-screen bg-[#DBEAFE]`}
       >
         <div>
           <Navbar />

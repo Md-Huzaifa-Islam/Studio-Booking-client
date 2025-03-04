@@ -2,9 +2,9 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-
 import { FaFilter } from "react-icons/fa";
 import { RiResetLeftLine } from "react-icons/ri";
+import { motion } from "framer-motion";
 import SectionHeader from "@/components/SectionHeader";
 import StudioCard from "@/components/StudioCard";
 
@@ -151,11 +151,16 @@ export default function StudioContainer() {
   }
 
   return (
-    <div className="p-4">
+    <div className="p-4 bg-[#DBEAFE]">
       <SectionHeader heading={"All Studios"} />
 
       {/* Search & Filter Section */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10">
+      <motion.div
+        className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
         {/* Location Search Bar */}
         {data && (
           <div className="relative z-50 w-full sm:w-1/3">
@@ -211,12 +216,17 @@ export default function StudioContainer() {
         >
           <RiResetLeftLine /> Reset Filters
         </button>
-      </div>
+      </motion.div>
 
       <hr className="my-8" />
 
       {/* Studio Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
         {filteredStudios && filteredStudios.length > 0 ? (
           filteredStudios.map((studio) => (
             <StudioCard key={studio.Id} studio={studio} />
@@ -224,7 +234,7 @@ export default function StudioContainer() {
         ) : (
           <p className="text-center col-span-full text-lg">No studios found.</p>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 }

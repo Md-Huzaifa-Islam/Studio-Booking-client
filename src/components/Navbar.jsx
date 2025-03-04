@@ -1,3 +1,5 @@
+"use client";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import React from "react";
 
@@ -37,12 +39,15 @@ export default function Navbar() {
                 />
               </svg>
             </div>
-            <ul
+            <motion.ul
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-white text-black rounded-box mt-3 w-52 p-2 shadow-lg"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
             >
               {link}
-            </ul>
+            </motion.ul>
           </div>
           <Link
             href={"/"}
@@ -51,10 +56,16 @@ export default function Navbar() {
             StudioSpace
           </Link>
         </div>
+
         <div className="navbar-end hidden lg:flex">
-          <ul className="menu menu-horizontal px-4 text-white space-x-6">
+          <motion.ul
+            className="menu menu-horizontal px-4 text-white space-x-6"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             {link}
-          </ul>
+          </motion.ul>
         </div>
       </div>
     </div>
