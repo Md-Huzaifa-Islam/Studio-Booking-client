@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# StudioSpace - Jr. Software Engineer Assessment
 
-## Getting Started
+## Overview
 
-First, run the development server:
+**StudioSpace** is a web application that allows users to browse available studios and book them based on their preferences. Users can explore studio details, such as name, type, location, amenities, and pricing. The application also provides an easy-to-use booking system where users can select a date and time for their desired studio.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Studio Listings**: View available studios with key information like type, location, amenities, and pricing.
+- **Booking System**: Allows users to book a studio by selecting a date and time slot.
+- **Responsive Design**: The UI is fully responsive, designed with **TailwindCSS**.
+- **Availability Check**: Ensures time slots are not double-booked by checking availability before confirming the booking.
+- **LocalStorage Integration**: Stores booking data in **localStorage** to simulate data persistence.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Frontend**: React.js
+- **Styling**: TailwindCSS
+- **Date Handling**: react-datepicker for date and time selection
+- **State Management**: React `useState` hooks
 
-## Learn More
+## Links
 
-To learn more about Next.js, take a look at the following resources:
+- **Live Project**: [https://studio-booking-client.vercel.app/](https://studio-booking-client.vercel.app/)
+- **GitHub Repository**: [https://github.com/Md-Huzaifa-Islam/studiospace](https://github.com/Md-Huzaifa-Islam/studiospace)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contributing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Feel free to fork the repository, make changes, and submit pull requests.
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License.
