@@ -141,7 +141,11 @@ export default function StudioContainer() {
   }, [data]);
 
   if (isPending) {
-    return <span className="text-center text-lg">Loading...</span>;
+    return (
+      <div className=" text-center">
+        <span className="loading w-1/12 loading-spinner text-blue-600"></span>
+      </div>
+    );
   }
 
   if (isError) {
